@@ -1,8 +1,7 @@
 # Phelsuma
 
-Native macOS desktop stickies with visible Markdown and ordinary files you can synchronize yourself.
-
-The app icon combines a Phelsuma day gecko with the yellow sticky note at the center of the app.
+Native macOS desktop stickies, with a markdown file per note that you can sync with Syncthing, iCloud, etc...
+I got annoyed at the macOS Stickies app not being synced like Apple Notes, so I built this.
 
 ## Build and run
 
@@ -55,9 +54,7 @@ Position, size, folded/floating/translucent state and text size are stored local
 
 For an isolated development profile, launch the executable with `PHELSUMA_HOME=/absolute/test/directory`. It uses that directory for notes, recovery and layout, with separate preferences.
 
-## Sync behaviour
-
-Phelsuma does not contact a cloud service or report that a transfer has finished. The external sync tool transfers the files and reports its own progress. Let it finish on both laptops before editing after a switch.
+## Read/write behaviour
 
 - Changes save after a short typing pause. An idle window never rewrites its note.
 - The app watches the directory and rescans every two seconds, and on activation/wake, for externally changed files.
@@ -74,5 +71,3 @@ Use **Reload Notes from Disk** to retry and redisplay a storage error after fixi
 Automated tests cover storage, simulated delayed transfers between two directories, conflicts, recovery, malformed files, local layout, Markdown commands, and native text-view styling. They do not prove a particular cloud provider's behaviour.
 
 The native app has been exercised for creating/editing notes, bold/undo, list continuation, folding, Find, deletion/restoration, and note/fold-state persistence after relaunch. See `docs/implementation.md` for the current verification record.
-
-Real iCloud testing on two Macs, testing older macOS versions and multiple monitors, and an exhaustive comparison of every Stickies shortcut remain outstanding. This is an initial usable implementation, not yet a claim of pixel-perfect or complete Stickies parity. Selection-to-note Services integration and rich-text-only commands are not implemented. macOS adds its standard tiling commands to the Window menu on supported versions; those commands have not been exhaustively exercised.
