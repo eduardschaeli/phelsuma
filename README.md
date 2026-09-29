@@ -23,7 +23,7 @@ The deployment target is macOS 13. The current development Mac is the only OS/de
 
 ## Using the app
 
-It should work exactly like the macOS Stickies app.
+**It should work exactly like the macOS Stickies app.**
 
 Each note is an independent window. Double-click its top strip to fold it. Use the Color and Window menus for colours, floating, translucency, arrangement, and default appearance.
 
