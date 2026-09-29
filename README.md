@@ -25,6 +25,7 @@ Markdown punctuation stays visible. Headings, bold, italic, inline code, and lin
 | Action | Shortcut |
 | --- | --- |
 | New note | ⌘N |
+| Yellow / blue / green / pink / purple / gray | ⌘1 / ⌘2 / ⌘3 / ⌘4 / ⌘5 / ⌘6 |
 | Close/delete note (with confirmation) | ⌘W |
 | Bold / italic | ⌘B / ⌘I |
 | Inline code | ⇧⌘K |

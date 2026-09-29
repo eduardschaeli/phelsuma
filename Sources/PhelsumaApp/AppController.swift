@@ -454,7 +454,7 @@ import PhelsumaUI
         add(font, "Smaller", #selector(smaller), "-", target: self)
         let colors = menu("Color")
         for (index, color) in NoteColor.allCases.enumerated() {
-            add(colors, color.rawValue.capitalized, #selector(changeColor), target: self, tag: index)
+            add(colors, color.rawValue.capitalized, #selector(changeColor), String(index + 1), target: self, tag: index)
         }
         let window = menu("Window"); NSApp.windowsMenu = window
         add(window, "Collapse", #selector(collapse), "m", [.command, .option], target: self)
