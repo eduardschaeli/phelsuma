@@ -2,6 +2,8 @@
 
 Native macOS desktop stickies with visible Markdown and ordinary files you can synchronize yourself.
 
+The app icon combines a Phelsuma day gecko with the yellow sticky note at the center of the app.
+
 ## Build and run
 
 Requires macOS and a Swift 6 toolchain (Xcode or recent Command Line Tools).
