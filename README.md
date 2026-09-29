@@ -1,4 +1,7 @@
-# Phelsuma
+<div align="center">
+  <img src="Resources/AppIcon.png" alt="Phelsuma app icon" width="180">
+  <h1>Phelsuma</h1>
+</div>
 
 Native macOS desktop stickies, with a markdown file per note that you can sync with Syncthing, iCloud, etc...
 I got annoyed at the macOS Stickies app not being synced like Apple Notes, so I built this.
