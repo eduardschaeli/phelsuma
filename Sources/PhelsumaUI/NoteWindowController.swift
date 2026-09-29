@@ -12,7 +12,16 @@ extension NoteColor {
         case .gray: NSColor(calibratedWhite: 0.88, alpha: 1)
         }
     }
-    public var strip: NSColor { background.blended(withFraction: 0.15, of: .black)! }
+    public var strip: NSColor {
+        switch self {
+        case .yellow: NSColor(calibratedRed: 1, green: 0.91, blue: 0.25, alpha: 1)
+        case .blue: NSColor(calibratedRed: 0.46, green: 0.76, blue: 1, alpha: 1)
+        case .green: NSColor(calibratedRed: 0.54, green: 0.84, blue: 0.40, alpha: 1)
+        case .pink: NSColor(calibratedRed: 1, green: 0.59, blue: 0.70, alpha: 1)
+        case .purple: NSColor(calibratedRed: 0.72, green: 0.61, blue: 0.93, alpha: 1)
+        case .gray: NSColor(calibratedWhite: 0.74, alpha: 1)
+        }
+    }
 }
 
 @MainActor final class StickyWindow: NSWindow {
@@ -173,6 +182,7 @@ extension NoteColor {
             window.makeFirstResponder(editor)
         }
         collapseButton.setAccessibilityLabel(state.collapsed ? "Expand note" : "Collapse note")
+        collapseButton.toolTip = state.collapsed ? "Expand note" : "Collapse note"
         updatingFrame = false
         onLayout?(id, state)
     }

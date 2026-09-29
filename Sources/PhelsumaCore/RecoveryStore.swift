@@ -27,7 +27,8 @@ public final class RecoveryStore {
 
     public func retain(_ note: Note, reason: String) throws {
         let previous = try entries().filter { $0.note.id == note.id }
-        if previous.first?.note == note { return }
+        if let latest = previous.first, latest.note.hasSameContent(as: note),
+           !reason.hasPrefix("Preserved") || latest.reason.hasPrefix("Preserved") { return }
         let entry = RecoveryEntry(id: UUID(), date: Date(), reason: reason, note: note)
         try JSONEncoder().encode(entry).write(to: url(for: entry.id), options: .atomic)
         // Conflict and deletion snapshots remain until the user explicitly removes them.

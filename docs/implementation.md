@@ -43,3 +43,9 @@ Actual keyboard parity and visual differences will be recorded after UI verifica
 ## Portion 3 validation: native note components
 
 `scripts/test.sh`: 19 tests passed, including AppKit text-view tests for highlighting and external reload selection. Added the native note-window controller with local collapse, float, translucency, zoom, and editor callbacks. Application menus and lifecycle are the next portion. Sandboxed tests cannot contact the system spelling service; this does not fail the editor tests.
+
+## Portion 4 validation: assembled app
+
+`scripts/test.sh`: 20 tests passed. `scripts/build-app.sh` produced an ad-hoc-signed `.app`. Through the native UI, verified new note creation, Unicode text, list continuation, Command-B, Command-Z, collapse/expand, Find and matching, delete confirmation, recovery preview, and restoration as a new note. File inspection confirmed Markdown punctuation and undo were saved as plain text. Fixed recovery deduplication across timestamp serialization and reserved Option-Command-F for Float on Top; Find and Replace uses Option-Command-R.
+
+The UI tool took more than 20 minutes to return from the first Phelsuma launch; subsequent interactions completed normally. This is not the app build time.

@@ -176,3 +176,15 @@ final class Fixture {
     try b.store.refresh()
     #expect(Set(b.store.notes.map(\.body)) == ["A edit", "B edit"])
 }
+
+@Test func recoveryDeduplicatesTimestampRoundingButProtectsDeletion() throws {
+    let f = try Fixture()
+    let note = try f.store.create(body: "same content")
+    let reloaded = try NoteCodec.decode(Data(contentsOf: f.url(note.id)))
+    try f.recovery.retain(reloaded, reason: "Loaded")
+    #expect(try f.recovery.entries().count == 1)
+    try f.store.delete(note.id)
+    let entries = try f.recovery.entries()
+    #expect(entries.count == 2)
+    #expect(entries.first?.reason == "Preserved deleted note")
+}

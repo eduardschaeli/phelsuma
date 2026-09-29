@@ -1,4 +1,6 @@
-import Foundation
-import PhelsumaCore
+import AppKit
 
-print("Phelsuma: native interface is under development.")
+let application = NSApplication.shared
+let controller = AppController()
+application.delegate = controller
+application.run()
