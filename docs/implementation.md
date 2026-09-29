@@ -35,3 +35,7 @@ Actual keyboard parity and visual differences will be recorded after UI verifica
 ## Portion 1 validation: file storage
 
 `scripts/test.sh`: 13 tests passed. Covers byte-preserving Markdown round trips, malformed files, duplicate identities, safe failures, idle saves, incoming changes, same-size/same-date edits, conflict-copy persistence, deletion recovery, and delayed handoff between two folders. Fixed URL normalization after a failing malformed-file test. The test script supplies the framework/runtime paths omitted by this Command Line Tools installation.
+
+## Portion 2 validation: editing and layout
+
+`scripts/test.sh`: 17 tests passed. Added UTF-16-safe Markdown toggling, list continuation/termination and indentation, and local layout persistence with off-screen recovery. A native window's layout file is independent of its Markdown document.
