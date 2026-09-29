@@ -70,6 +70,6 @@ Use **Reload Notes from Disk** to retry and redisplay a storage error after fixi
 
 Automated tests cover storage, simulated delayed transfers between two directories, conflicts, recovery, malformed files, local layout, Markdown commands, and native text-view styling. They do not prove a particular cloud provider's behaviour.
 
-The native app has been exercised for creating/editing notes, bold/undo, list continuation, folding, Find, and deletion/restoration. See `docs/implementation.md` for the current verification record.
+The native app has been exercised for creating/editing notes, bold/undo, list continuation, folding, Find, deletion/restoration, and note/fold-state persistence after relaunch. See `docs/implementation.md` for the current verification record.
 
-Real iCloud testing on two Macs, testing older macOS versions and multiple monitors, and an exhaustive comparison of every Stickies shortcut remain outstanding. This is an initial usable implementation, not yet a claim of pixel-perfect or complete Stickies parity. System-provided window tiling commands, selection-to-note Services integration, and rich-text-only commands are not implemented.
+Real iCloud testing on two Macs, testing older macOS versions and multiple monitors, and an exhaustive comparison of every Stickies shortcut remain outstanding. This is an initial usable implementation, not yet a claim of pixel-perfect or complete Stickies parity. Selection-to-note Services integration and rich-text-only commands are not implemented. macOS adds its standard tiling commands to the Window menu on supported versions; those commands have not been exhaustively exercised.

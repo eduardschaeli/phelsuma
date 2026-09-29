@@ -71,7 +71,8 @@ public enum Markdown {
             let removed = contents.hasPrefix("\t") ? 1 : (contents.hasPrefix("  ") ? 2 : 0)
             guard removed > 0 else { return nil }
             return TextEdit(range: NSRange(location: line.location, length: removed), replacement: "",
-                            selection: NSRange(location: max(line.location, selection.location - removed), length: selection.length))
+                            selection: NSRange(location: max(line.location, selection.location - removed),
+                                               length: max(line.location, NSMaxRange(selection) - removed) - max(line.location, selection.location - removed)))
         }
         return TextEdit(range: NSRange(location: line.location, length: 0), replacement: "  ",
                         selection: NSRange(location: selection.location + 2, length: selection.length))

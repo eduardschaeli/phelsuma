@@ -98,6 +98,10 @@ import PhelsumaUI
     @objc private func woke() { refresh() }
 
     private func openStore(_ folder: URL) throws {
+        guard let recovery, layout != nil else {
+            throw NSError(domain: "Phelsuma", code: 1, userInfo: [NSLocalizedDescriptionKey:
+                "Local recovery storage could not be initialized. Check available disk space and permissions, then restart Phelsuma."])
+        }
         let granted = folder.startAccessingSecurityScopedResource()
         let next: NoteStore
         do {

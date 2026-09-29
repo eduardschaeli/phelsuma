@@ -195,6 +195,7 @@ extension NoteColor {
         window.minSize = NSSize(width: 180, height: 16)
         window.setFrame(NSRect(x: state.x, y: state.y + state.height - 16, width: state.width, height: 16), display: true)
         collapseButton.setAccessibilityLabel("Expand note")
+        collapseButton.toolTip = "Expand note"
         updatingFrame = false
     }
 

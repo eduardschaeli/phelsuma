@@ -58,3 +58,12 @@ private func applying(_ edit: TextEdit, to text: String) -> String {
     #expect(try LayoutStore(url: url).states[note.id] == fitted)
     #expect(try Data(contentsOf: f.url(note.id)) == original)
 }
+
+@Test func outdentingWholeSelectionKeepsRangeInsideText() throws {
+    let text = "  - café 🦎"
+    let selection = NSRange(location: 0, length: (text as NSString).length)
+    let edit = try #require(Markdown.indentList(text: text, selection: selection, outdent: true))
+    let result = applying(edit, to: text)
+    #expect(result == "- café 🦎")
+    #expect(edit.selection == NSRange(location: 0, length: (result as NSString).length))
+}
