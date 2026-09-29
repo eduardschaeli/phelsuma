@@ -39,3 +39,7 @@ Actual keyboard parity and visual differences will be recorded after UI verifica
 ## Portion 2 validation: editing and layout
 
 `scripts/test.sh`: 17 tests passed. Added UTF-16-safe Markdown toggling, list continuation/termination and indentation, and local layout persistence with off-screen recovery. A native window's layout file is independent of its Markdown document.
+
+## Portion 3 validation: native note components
+
+`scripts/test.sh`: 19 tests passed, including AppKit text-view tests for highlighting and external reload selection. Added the native note-window controller with local collapse, float, translucency, zoom, and editor callbacks. Application menus and lifecycle are the next portion. Sandboxed tests cannot contact the system spelling service; this does not fail the editor tests.

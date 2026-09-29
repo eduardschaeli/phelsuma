@@ -7,7 +7,9 @@ let package = Package(
     products: [.executable(name: "Phelsuma", targets: ["PhelsumaApp"])],
     targets: [
         .target(name: "PhelsumaCore"),
-        .executableTarget(name: "PhelsumaApp", dependencies: ["PhelsumaCore"]),
+        .target(name: "PhelsumaUI", dependencies: ["PhelsumaCore"]),
+        .executableTarget(name: "PhelsumaApp", dependencies: ["PhelsumaCore", "PhelsumaUI"]),
+        .testTarget(name: "PhelsumaUITests", dependencies: ["PhelsumaUI", "PhelsumaCore"]),
         .testTarget(name: "PhelsumaCoreTests", dependencies: ["PhelsumaCore"])
     ]
 )
