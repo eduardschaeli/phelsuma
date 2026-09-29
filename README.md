@@ -4,7 +4,8 @@
 </div>
 
 Native macOS desktop stickies, with a markdown file per note that you can sync with Syncthing, iCloud, etc...
-I got annoyed at the macOS Stickies app not being synced like Apple Notes, so I built this.
+
+I got annoyed at the macOS Stickies app not being synced like Apple Notes, so I asked the code goblins to build this.
 
 ## Build and run
 
