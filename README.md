@@ -30,6 +30,16 @@ scripts/package-release.sh 0.1.0
 
 This runs the tests, builds an optimized app for the current Mac's CPU architecture, applies the version and an ad-hoc signature, then writes the ZIP and its SHA-256 checksum to `dist/`. Set `SKIP_TESTS=1` to omit the test run or `PHELSUMA_BUILD_NUMBER=123` to provide a specific internal build number.
 
+To push the current branch and create the corresponding GitHub release with both files attached, install and authenticate [GitHub CLI](https://cli.github.com), then add `--publish`:
+
+```sh
+brew install gh
+gh auth login
+scripts/package-release.sh 0.1.0 --publish
+```
+
+Publishing requires a clean worktree. It performs a normal push, creates the `v0.1.0` tag and release on GitHub, and uses GitHub's generated release notes. It never force-pushes.
+
 Because this local workflow does not use an Apple Developer ID, the result is not notarized. Gatekeeper may require people who download it to right-click the app and choose **Open**, or approve it in **System Settings → Privacy & Security**.
 
 The deployment target is macOS 13. The current development Mac is the only OS/device verified so far; current Swift Testing tooling may require macOS 14 or later to run the tests.
