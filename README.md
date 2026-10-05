@@ -22,6 +22,16 @@ open build/Phelsuma.app
 
 Use `scripts/build-app.sh release` for an optimized build. The resulting app is signed locally with an ad-hoc signature; distribution to other people still needs Developer ID signing and notarization. There are no third-party dependencies. The package can also be opened in Xcode.
 
+To create a ZIP suitable for attaching to a GitHub release, run:
+
+```sh
+scripts/package-release.sh 0.1.0
+```
+
+This runs the tests, builds an optimized app for the current Mac's CPU architecture, applies the version and an ad-hoc signature, then writes the ZIP and its SHA-256 checksum to `dist/`. Set `SKIP_TESTS=1` to omit the test run or `PHELSUMA_BUILD_NUMBER=123` to provide a specific internal build number.
+
+Because this local workflow does not use an Apple Developer ID, the result is not notarized. Gatekeeper may require people who download it to right-click the app and choose **Open**, or approve it in **System Settings → Privacy & Security**.
+
 The deployment target is macOS 13. The current development Mac is the only OS/device verified so far; current Swift Testing tooling may require macOS 14 or later to run the tests.
 
 ## Using the app
