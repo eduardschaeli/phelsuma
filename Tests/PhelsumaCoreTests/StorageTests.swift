@@ -189,6 +189,34 @@ final class Fixture {
     #expect(entries.first?.reason == "Preserved deleted note")
 }
 
+@Test func recoveryDirectoryIsReadOnceAcrossManyRetains() throws {
+    let root = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+    let directory = root.appendingPathComponent("Recovery")
+    try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+    defer { try? FileManager.default.removeItem(at: root) }
+
+    for index in 0..<120 {
+        let entry = RecoveryEntry(id: UUID(), date: Date(timeIntervalSince1970: Double(index)),
+                                  reason: "Existing", note: Note(body: "Existing \(index)"))
+        try JSONEncoder().encode(entry)
+            .write(to: directory.appendingPathComponent("\(entry.id).json"), options: .atomic)
+    }
+
+    var reads = 0
+    let recovery = try RecoveryStore(directory: directory) { url in
+        reads += 1
+        return try Data(contentsOf: url)
+    }
+    #expect(try recovery.entries().count == 120)
+    #expect(reads == 120)
+
+    for index in 0..<50 {
+        try recovery.retain(Note(body: "Loaded \(index)"), reason: "Loaded")
+    }
+    #expect(try recovery.entries().count == 170)
+    #expect(reads == 120)
+}
+
 @Test func saveAfterExternalDeletionPreservesPendingText() throws {
     let f = try Fixture()
     let note = try f.store.create(body: "base")
