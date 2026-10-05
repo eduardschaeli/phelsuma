@@ -88,8 +88,10 @@ extension NoteColor {
         scroll.borderType = .noBorder
         scroll.drawsBackground = false
         scroll.hasVerticalScroller = true
+        scroll.hasHorizontalScroller = false
         scroll.autohidesScrollers = true
         scroll.scrollerStyle = .overlay
+        scroll.horizontalScrollElasticity = .none
         editor.frame = NSRect(x: 0, y: 0, width: state.width, height: state.height - 16)
         editor.isVerticallyResizable = true
         editor.isHorizontallyResizable = false
@@ -103,6 +105,8 @@ extension NoteColor {
         caption.font = NSFont.systemFont(ofSize: 10)
         caption.textColor = .black
         caption.lineBreakMode = .byTruncatingTail
+        caption.maximumNumberOfLines = 1
+        caption.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         caption.translatesAutoresizingMaskIntoConstraints = false
         caption.isHidden = true
         strip.addSubview(caption)
