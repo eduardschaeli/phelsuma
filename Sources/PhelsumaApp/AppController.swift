@@ -354,6 +354,18 @@ import PhelsumaUI
             rowHeight = max(rowHeight, window.frame.height)
         }
     }
+    @objc func arrangeInColorColumns(_ sender: Any?) {
+        guard let screen = active?.window?.screen ?? NSScreen.main, let store else { return }
+        let items = store.notes.compactMap { note -> ColorColumnLayout.Item<UUID>? in
+            guard let frame = windows[note.id]?.window?.frame else { return nil }
+            return .init(id: note.id, color: note.color, size: frame.size)
+        }
+        guard !items.isEmpty else { return }
+        arrangementUndo = windows.compactMapValues { $0.window?.frame.origin }
+        for (id, origin) in ColorColumnLayout.positions(for: items, in: screen.visibleFrame) {
+            windows[id]?.place(at: origin)
+        }
+    }
     @objc func undoArrange(_ sender: Any?) {
         let current = windows.compactMapValues { $0.window?.frame.origin }
         for (id, origin) in arrangementUndo { windows[id]?.place(at: origin) }
@@ -473,6 +485,7 @@ import PhelsumaUI
         for (tag, title) in ["Color", "Content", "Date", "Location on Screen"].enumerated() {
             add(arrangeMenu, title, #selector(arrange), target: self, tag: tag)
         }
+        add(window, "Arrange in Color Columns", #selector(arrangeInColorColumns), target: self)
         add(window, "Bring All to Front", #selector(NSApplication.arrangeInFront(_:)))
     }
 }
