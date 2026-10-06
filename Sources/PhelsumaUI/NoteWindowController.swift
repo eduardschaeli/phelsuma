@@ -235,8 +235,19 @@ extension NoteColor {
         recordFrame()
     }
     public func windowDidMove(_ notification: Notification) { recordFrame() }
-    public func windowDidResize(_ notification: Notification) { recordFrame() }
+    public func windowDidResize(_ notification: Notification) { synchronizeEditorWidth(); recordFrame() }
+    public func windowDidBecomeKey(_ notification: Notification) { synchronizeEditorWidth() }
     public func windowDidResignKey(_ notification: Notification) { onResign?() }
+    private func synchronizeEditorWidth() {
+        window?.contentView?.layoutSubtreeIfNeeded()
+        let width = scroll.contentView.bounds.width
+        guard width > 0 else { return }
+        var frame = editor.frame
+        frame.size.width = width
+        editor.frame = frame
+        let textWidth = max(0, width - editor.textContainerInset.width * 2)
+        editor.textContainer?.containerSize = NSSize(width: textWidth, height: CGFloat.greatestFiniteMagnitude)
+    }
     private func recordFrame() {
         guard !updatingFrame, let frame = window?.frame else { return }
         state.x = frame.minX

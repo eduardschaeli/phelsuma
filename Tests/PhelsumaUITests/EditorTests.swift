@@ -25,6 +25,57 @@ import PhelsumaCore
     #expect(view.selectedRange() == NSRange(location: 3, length: 0))
 }
 
+@Test @MainActor func typingLongTextWrapsInsideSticky() throws {
+    let controller = NoteWindowController(note: Note(body: ""), state: WindowState(width: 300, height: 260))
+    let window = try #require(controller.window)
+    controller.showWindow(nil)
+    defer { window.close() }
+    window.contentView?.layoutSubtreeIfNeeded()
+
+    controller.editor.insertText(String(repeating: "A long piece of text ", count: 40), replacementRange: NSRange(location: 0, length: 0))
+    window.contentView?.layoutSubtreeIfNeeded()
+
+    let container = try #require(controller.editor.textContainer)
+    let layout = try #require(controller.editor.layoutManager)
+    layout.ensureLayout(for: container)
+    #expect(layout.usedRect(for: container).height > layout.defaultLineHeight(for: controller.editor.font!))
+    #expect(container.containerSize.width == 286)
+    #expect(controller.editor.enclosingScrollView?.contentView.bounds.minX == 0)
+}
+
+@Test @MainActor func focusingStickyCorrectsStaleEditorWidth() throws {
+    let controller = NoteWindowController(note: Note(body: ""), state: WindowState(width: 240, height: 260))
+    let window = try #require(controller.window)
+    controller.showWindow(nil)
+    defer { window.close() }
+    window.contentView?.layoutSubtreeIfNeeded()
+    controller.editor.frame.size.width = 420
+    controller.editor.textContainer?.containerSize.width = 406
+
+    controller.window?.delegate?.windowDidBecomeKey?(Notification(name: NSWindow.didBecomeKeyNotification, object: window))
+
+    #expect(controller.editor.frame.width == 240)
+    #expect(controller.editor.textContainer?.containerSize.width == 226)
+}
+
+@Test @MainActor func windowResizeCorrectsStaleEditorWidth() throws {
+    let controller = NoteWindowController(note: Note(body: ""), state: WindowState(width: 420, height: 260))
+    let window = try #require(controller.window)
+    controller.showWindow(nil)
+    defer { window.close() }
+    window.contentView?.layoutSubtreeIfNeeded()
+
+    var frame = window.frame
+    frame.size.width = 240
+    window.setFrame(frame, display: false)
+    controller.editor.frame.size.width = 420
+    controller.editor.textContainer?.containerSize.width = 406
+    controller.windowDidResize(Notification(name: NSWindow.didResizeNotification, object: window))
+
+    #expect(controller.editor.frame.width == 240)
+    #expect(controller.editor.textContainer?.containerSize.width == 226)
+}
+
 @Test @MainActor func longFirstLineWrapsWithoutResizingSticky() throws {
     let state = WindowState(width: 300, height: 260)
     let controller = NoteWindowController(note: Note(body: "Short"), state: state)
